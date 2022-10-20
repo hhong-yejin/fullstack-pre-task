@@ -28,7 +28,7 @@ const ProfileCardList = () => {
           href="https://jober.notion.site/fa8af8dfd86640e9aa7d375e8f91868d"
           target="_blank"
         >
-          사전과제 페이지aa
+          사전과제 페이지a
         </a>
         에 안내된 내용대로 연락처 목록 및 연락처 상세페이지를 구현해주세요.
       </p>
