@@ -9,10 +9,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    job: {
+    nickname: {
       type: DataTypes.STRING(100),
     },
-    // define columns...
+    phoneNumber: {
+      type: DataTypes.STRING(255),
+    },
+    email: {
+      type: DataTypes.STRING(255),
+    },
+    birth: {
+      type: DataTypes.STRING(255),
+    },
+    address: {
+      type: DataTypes.STRING(255),
+    },
+    gender: {
+      type: DataTypes.STRING(100),
+    },
   },{
     tableName: "profile_card",
     paranoid: true,
