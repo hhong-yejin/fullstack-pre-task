@@ -1,0 +1,7 @@
+.placeholder {
+  background: rgb(255, 240, 120);
+  &:before {
+    content: "Drop here";
+    color: rgb(225, 210, 90);
+  }
+}
