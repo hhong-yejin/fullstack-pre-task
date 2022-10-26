@@ -12,4 +12,29 @@ router.get('/', asyncWrapper(async (req, res) => {
   });
 }));
 
+router.post('/', asyncWrapper(async (req, res) => {
+  const {
+    name,
+    nickname,
+    phoneNumber,
+    email,
+    birth,
+    address,
+    gender,
+  } = req.body;
+  const result = await ProfileCard.create({
+    name,
+    nickname,
+    phoneNumber,
+    email,
+    birth,
+    address,
+    gender,
+  });
+
+  res.json({ data: {
+      result
+    }});
+}));
+
 module.exports = router;
