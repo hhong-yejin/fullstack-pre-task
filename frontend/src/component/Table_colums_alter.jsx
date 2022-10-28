@@ -5,8 +5,9 @@ import ALL_PROFILE_COLUMNS from "../context/propfile_colums";
 
 const Table_colums_alter = ({ columns, setColumns }) => {
   const [alterArray, setAlterArray] = useState(ALL_PROFILE_COLUMNS);
+  const [aaa, setAaa] = useState(alterArray);
+
   const [searchValue, setSearchValue] = useState("");
-  let checked = new Array(ALL_PROFILE_COLUMNS.length).fill(true);
   const [_, setIsDragging] = useState(false);
   const onDragStart = (e) => {
     setIsDragging(true);
@@ -16,6 +17,7 @@ const Table_colums_alter = ({ columns, setColumns }) => {
   let dropIndex = 0;
   const onDragOver = (e) => {
     e.preventDefault();
+    console.log(e.target.id);
     dropIndex = e.target.id;
   };
   const onDrop = (e) => {
@@ -25,30 +27,47 @@ const Table_colums_alter = ({ columns, setColumns }) => {
     const movingTarget = e.dataTransfer.getData("checkbox"); // 1
     const item = alterArray.splice(movingTarget, 1);
     alterArray.splice(dropIndex, 0, item[0]);
+    let ccc = [];
+    for (let i = 0; i < ALL_PROFILE_COLUMNS.length; i++) {
+      aaa.map((a) => {
+        if (alterArray[i] == a) {
+          ccc = ccc.concat(a);
+        }
+      });
+    }
+    setAaa(ccc);
   };
-  console.log(alterArray);
 
   const onChange = (e) => {
-    // setAlterArray(alterArray.filter((a) => a !== e.map((b) => b)));
-    // let a = e.map((a) => {
-    //   return {
-    //     title: a,
-    //     dataIndex: a,
-    //     key: a,
-    //   };
-    // });
-    // setColumns(a);
-    // const a = e;
-    // ALL_PROFILE_COLUMNS = e;
-    // // checked[e.target.id] = !checked[e.target.id];
-    // if (e.target.checked === false) {
-    //   const item = ALL_PROFILE_COLUMNS.splice(e.target.id, 1);
-    //   ALL_PROFILE_COLUMNS.splice(ALL_PROFILE_COLUMNS.length, 0, item[0]);
-    // }
+    let ccc = [];
+    for (let i = 0; i < ALL_PROFILE_COLUMNS.length; i++) {
+      e.map((a) => {
+        if (alterArray[i] == a) {
+          ccc = ccc.concat(a);
+        }
+      });
+    }
+    e.map((a) => {
+      if (!alterArray.includes(a)) {
+        ccc = ccc.concat(a);
+      }
+    });
+    setAaa(ccc);
   };
-  console.log(ALL_PROFILE_COLUMNS);
+
+  const onChangeCheckbox = (e) => {
+    console.log(alterArray.length);
+    if (e.target.checked === false) {
+      console.log(e.target.id);
+      const item = alterArray.splice(e.target.id, 1);
+      console.log(item);
+      alterArray.splice(alterArray.length, 0, item[0]);
+      console.log(alterArray);
+    }
+  };
+
   useEffect(() => {
-    let a = alterArray.map((a) => {
+    let a = aaa.map((a) => {
       return {
         title: a,
         dataIndex: a,
@@ -56,7 +75,7 @@ const Table_colums_alter = ({ columns, setColumns }) => {
       };
     });
     setColumns(a);
-  }, [alterArray]);
+  }, [aaa]);
   return (
     <div>
       <Input
@@ -89,15 +108,15 @@ const Table_colums_alter = ({ columns, setColumns }) => {
             >
               <Checkbox
                 id={idx}
-                // onChange={onChange}
-                checked={checked[idx]}
+                onChange={onChangeCheckbox}
+                checked={true}
                 value={item}
               >
                 {item}
               </Checkbox>
               {/* {checked[idx] === true ? (
-                <Button type="text" icon={<MenuOutlined />}></Button>
-              ) : null} */}
+                  <Button type="text" icon={<MenuOutlined />}></Button>
+                ) : null} */}
             </div>
           );
         })}
