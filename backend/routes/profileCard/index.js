@@ -8,12 +8,30 @@ router.get('/', asyncWrapper(async (req, res) => {
   const list = await ProfileCard.findAll();
 
   res.json({
-    list,
+    data: {
+      profileList: list,
+    },
   });
 }));
 
 router.post('/', asyncWrapper(async (req, res) => {
   const {
+    name,
+  } = req.body;
+  if (!name) throw new Error('name is required');
+
+  const result = await ProfileCard.create({
+    name,
+  });
+
+  res.json({ data: {
+      result
+    }});
+}));
+
+router.put('/update', asyncWrapper(async (req, res) => {
+  const {
+    id,
     name,
     nickname,
     phoneNumber,
@@ -22,7 +40,10 @@ router.post('/', asyncWrapper(async (req, res) => {
     address,
     gender,
   } = req.body;
-  const result = await ProfileCard.create({
+  if (!id) throw new Error('id is required');
+  if (!name) throw new Error('name is required');
+
+  const result = await ProfileCard.update({
     name,
     nickname,
     phoneNumber,
@@ -30,6 +51,10 @@ router.post('/', asyncWrapper(async (req, res) => {
     birth,
     address,
     gender,
+  }, {
+    where: {
+      id: id,
+    }
   });
 
   res.json({ data: {
